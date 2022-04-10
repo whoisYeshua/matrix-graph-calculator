@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="description" content="" />
-		<link rel="icon" href="%svelte.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%svelte.head%
-	</head>
-	<body>
-		<div>%svelte.body%</div>
-	</body>
+  <head>
+    <!-- Default meta -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Theme style (Safari & Chrome Android) -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="F2F2F2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="2A303C" />
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="%svelte.assets%/favicons/favicon-logo.png" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      sizes="any"
+      href="%svelte.assets%/favicons/favicon-logo.svg" />
+    %svelte.head%
+  </head>
+  <body>
+    %svelte.body%
+  </body>
 </html>
