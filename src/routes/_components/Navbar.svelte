@@ -58,7 +58,7 @@
           <a
             aria-label="Github"
             target="_blank"
-            href="https://github.com/"
+            href="https://github.com/whoisYeshua/matrix-graph-calculator"
             rel="noopener external"
             class="btn btn-ghost drawer-button btn-square normal-case !outline-none focus-visible:!outline-current">
             <svg
