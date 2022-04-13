@@ -114,28 +114,6 @@
     - <var>l<sub>2</sub></var>
   </p>
 
-  <h2>Example with 2 arguments</h2>
-  <p><var>F</var>(2, 3)=2*3 - 2 - 3 = 1</p>
-
-  <h2>Example with 3 and more arguments</h2>
-  <p>
-    <var>F</var>(4, 5, 6)
-    <br />
-    4*5 - 4 - 5 = 11
-    <br />
-    Let's represent integers from 11 in descending order as the sum of numbers 4, 5, 6 in various combinations:
-    <br />
-    11 = 5 + 6
-    <br />
-    10 = 4 + 6
-    <br />
-    9 = 4 + 5
-    <br />
-    8 = 4 + 4
-    <br />
-    7 does not unfold => F(4, 5, 6) = 7
-  </p>
-
   <h2>Calculator</h2>
   <form autocomplete="off" on:submit|preventDefault={handleSubmission} class="not-prose">
     <div class="flex gap-1 max-w-sm">
@@ -183,4 +161,26 @@
       </div>
     </div>
   {/if}
+
+  <h2>Example with 2 arguments</h2>
+  <p><var>F</var>(2, 3)=2*3 - 2 - 3 = 1</p>
+
+  <h2>Example with 3 and more arguments</h2>
+  <p>
+    <var>F</var>(4, 5, 6)
+    <br />
+    4*5 - 4 - 5 = 11
+    <br />
+    Let's represent integers from 11 in descending order as the sum of numbers 4, 5, 6 in various combinations:
+    <br />
+    11 = 5 + 6
+    <br />
+    10 = 4 + 6
+    <br />
+    9 = 4 + 5
+    <br />
+    8 = 4 + 4
+    <br />
+    7 does not unfold => F(4, 5, 6) = 7
+  </p>
 </div>
