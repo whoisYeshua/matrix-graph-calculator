@@ -1,99 +1,23 @@
 <script lang="ts">
   import SEO from '../_components/SEO.svelte'
+  import { formateInputArguments } from './_components/frobenius/formateInputArguments'
+  import { calculateFrobenius } from './_components/frobenius/calculateFrobenius'
 
   let answer: string = ''
   let frobeniusInputArguments: string
   let errorMessage: string = ''
   let stepByStepMessage: string = ''
 
-  const initiateStepByStepMessage = (l1: number, l2: number, res: number) => {
-    stepByStepMessage = `${l1} * ${l2} - ${l1} - ${l2} = ${res}\n\n`
-  }
-
-  const addCommonCombinationMessage = (args: number[], current: number) => {
-    stepByStepMessage += `Let's represent integers from ${current} in descending order as the sum of numbers ${args.join(
-      ', '
-    )} in various combinations:\n\n`
-  }
-
-  const addSCombinationStepMessage = (args: number[], current: number) => {
-    stepByStepMessage += `${current} = ${args.join(' + ')}\n\n`
-  }
-
-  const addFinalCombinationMessage = (args: number[], res: number) => {
-    stepByStepMessage += `${res} does not unfold => F(${args.join(', ')}) = ${res}`
-  }
-
-  const combinationSum = function (candidates: number[], target: number) {
-    const combos: number[][] = []
-    const buffer: number[] = []
-
-    const helper = (i: number, residualTarget: number) => {
-      if (residualTarget === 0) {
-        // the sum of the elements in our buffer amount to the original target
-        combos.push([...buffer])
-        return
-      }
-      // the sum of the elements in our buffer exceed the original target or we've exhausted our candidates
-      if (residualTarget < 0 || i === candidates.length) return
-
-      buffer.push(candidates[i])
-      helper(i, residualTarget - candidates[i])
-      buffer.pop()
-      helper(i + 1, residualTarget)
-    }
-
-    helper(0, target)
-
-    return combos
-  }
-
-  const createCombinations = (argsArr: number[], initialValue: number) => {
-    addCommonCombinationMessage(argsArr, initialValue)
-
-    const minArgument = Math.min(...argsArr)
-    for (initialValue; initialValue >= minArgument; initialValue--) {
-      const combinationArr = combinationSum(argsArr, initialValue)
-      const shortestCombination = combinationArr.sort((a, b) => a.length - b.length)[0]
-
-      if (shortestCombination && shortestCombination.length > 0) {
-        addSCombinationStepMessage(shortestCombination, initialValue)
-      } else break
-    }
-
-    addFinalCombinationMessage(argsArr, initialValue)
-
-    return initialValue
-  }
-
-  const calculateFrobenius = (argsArr: number[]) => {
-    const [l1, l2] = argsArr
-
-    const res = l1 * l2 - l1 - l2
-    initiateStepByStepMessage(l1, l2, res)
-
-    if (argsArr.length === 2) {
-      return res
-    } else {
-      return createCombinations(argsArr, res)
-    }
-  }
-
   const handleSubmission = () => {
     try {
-      const formattedArguments = frobeniusInputArguments
-        .split(',')
-        .filter(argument => !argument.match(/^\s*$/))
-        .map(argument => {
-          let integer = parseInt(argument)
-          if (Number.isNaN(integer)) throw Error(`Argrument "${argument.trim()}" is not a number`)
-          return integer
-        })
-        .sort((a, b) => a - b)
+      const formattedArguments = formateInputArguments(frobeniusInputArguments)
 
       if (formattedArguments.length < 2) throw Error('You should past minimum 2 arguments')
 
-      answer = calculateFrobenius(formattedArguments).toString()
+      const { result, message } = calculateFrobenius(formattedArguments, stepByStepMessage)
+      answer = result.toString()
+      stepByStepMessage = message
+
       errorMessage = ''
     } catch (error) {
       if (error instanceof Error) errorMessage = error.message
@@ -115,28 +39,28 @@
   </p>
 
   <h2>Calculator</h2>
-  <form autocomplete="off" on:submit|preventDefault={handleSubmission} class="not-prose">
-    <div class="flex gap-1 max-w-sm">
-      <label for="frobenius-input" class="italic">F</label>(
+  <form class="not-prose" autocomplete="off" on:submit|preventDefault={handleSubmission}>
+    <div class="flex max-w-sm gap-1">
+      <label class="italic" for="frobenius-input">F</label>(
       <input
+        class="input input-bordered input-sm w-full"
         id="frobenius-input"
-        bind:value={frobeniusInputArguments}
-        on:change={() => (answer = '')}
         type="text"
-        required
         inputmode="decimal"
         placeholder="Past here arguments with comma"
         title="Fill this field. Example: 2, 3"
-        class="input input-bordered input-sm w-full" />
-      ) <button class="btn btn-sm btn-primary" type="submit">=</button>
-      <output class="font-semibold min-w-[1.5rem] text-center">{answer}</output>
+        required
+        bind:value={frobeniusInputArguments}
+        on:change={() => (answer = '')} />
+      ) <button class="btn btn-primary btn-sm" type="submit">=</button>
+      <output class="min-w-[1.5rem] text-center font-semibold">{answer}</output>
     </div>
     {#if errorMessage}
-      <div class="alert alert-warning shadow-lg mt-4 max-w-sm">
+      <div class="alert alert-warning mt-4 max-w-sm shadow-lg">
         <div>
           <svg
+            class="h-6 w-6 flex-shrink-0 stroke-current"
             xmlns="http://www.w3.org/2000/svg"
-            class="stroke-current flex-shrink-0 h-6 w-6"
             fill="none"
             viewBox="0 0 24 24">
             <path
@@ -153,8 +77,8 @@
 
   {#if answer}
     <div
-      tabindex="0"
-      class="mt-6 collapse collapse-arrow border border-base-300 bg-base-100 rounded-box max-w-sm not-prose">
+      class="not-prose collapse-arrow collapse rounded-box mt-6 max-w-sm border border-base-300 bg-base-100"
+      tabindex="0">
       <div class="collapse-title text-xl font-medium">Step by step</div>
       <div class="collapse-content">
         <p class="whitespace-pre-line">{stepByStepMessage}</p>
