@@ -83,7 +83,7 @@
     try {
       const formattedArguments = frobeniusInputArguments
         .split(',')
-        .filter(el => !el.match(/^\s*$/))
+        .filter(argument => !argument.match(/^\s*$/))
         .map(argument => {
           let integer = parseInt(argument)
           if (Number.isNaN(integer)) throw Error(`Argrument "${argument.trim()}" is not a number`)
@@ -124,7 +124,7 @@
         on:change={() => (answer = '')}
         type="text"
         required
-        input-mode="number"
+        inputmode="numeric"
         placeholder="Past here arguments with comma"
         title="Fill this field. Example: 2, 3"
         class="input input-bordered input-sm w-full" />
