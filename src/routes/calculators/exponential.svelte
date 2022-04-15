@@ -1,7 +1,7 @@
 <script lang="ts">
   import SEO from '../_components/SEO.svelte'
-  import MatrixInput from './_components/matrixInput.svelte'
-  import MatrixPast from './_components/matrixPast.svelte'
+  import MatrixInput from './_components/MatrixInput.svelte'
+  import MatrixPast from './_components/MatrixPast.svelte'
 
   let selectedRowSize: number
   let selectedColumnSize: number
@@ -11,7 +11,6 @@
   let showContent = 'input'
 
   const changeMatrixElementValue = (i: number, j: number, event: Event) => {
-    // matrix = matrix[i][j] =
     const inputValue = parseInt((event.target as HTMLInputElement).value)
     matrix[i][j] = inputValue
     matrix = matrix
@@ -47,7 +46,7 @@
       <MatrixInput bind:selectedColumnSize bind:selectedRowSize bind:matrix />
     {/if}
     {#if showContent === 'past'}
-      <MatrixPast />
+      <MatrixPast bind:matrix />
     {/if}
     <br />
 
@@ -74,7 +73,7 @@
           {/each}
         {/if}
       </div>
-      <button type="button" class="btn btn-active btn-secondary btn-sm" on:click={handleReset}>
+      <button type="button" class="btn btn-active btn-secondary btn-sm mt-2" on:click={handleReset}>
         Reset
       </button>
     </form>

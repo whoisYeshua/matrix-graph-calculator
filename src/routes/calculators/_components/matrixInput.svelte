@@ -30,10 +30,9 @@
   }
 
   matrix = createMatrix(selectedRowSize, createMatrixRow(selectedColumnSize))
-  console.log(matrix[0] === matrix[1])
 </script>
 
-<div class=" w-full max-w-sm">
+<div class="w-full max-w-sm">
   <label class="label w-fit" for="matrix-row-select">
     <span class="label-text">Pick matrix size:</span>
   </label>

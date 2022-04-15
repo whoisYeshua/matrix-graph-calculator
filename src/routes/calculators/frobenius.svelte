@@ -2,6 +2,7 @@
   import SEO from '../_components/SEO.svelte'
   import { formateInputArguments } from './_components/frobenius/formateInputArguments'
   import { calculateFrobenius } from './_components/frobenius/calculateFrobenius'
+  import ErrorAlert from './_components/ErrorAlert.svelte'
 
   let answer: string = ''
   let frobeniusInputArguments: string
@@ -39,8 +40,11 @@
   </p>
 
   <h2>Calculator</h2>
-  <form class="not-prose" autocomplete="off" on:submit|preventDefault={handleSubmission}>
-    <div class="flex max-w-sm gap-1">
+  <form
+    class="not-prose flex max-w-sm flex-col gap-4"
+    autocomplete="off"
+    on:submit|preventDefault={handleSubmission}>
+    <div class="flex gap-1">
       <label class="italic" for="frobenius-input">F</label>(
       <input
         class="input input-bordered input-sm w-full"
@@ -55,27 +59,10 @@
       ) <button class="btn btn-primary btn-sm" type="submit">=</button>
       <output class="min-w-[1.5rem] text-center font-semibold">{answer}</output>
     </div>
-    {#if errorMessage}
-      <div class="alert alert-warning mt-4 max-w-sm shadow-lg">
-        <div>
-          <svg
-            class="h-6 w-6 flex-shrink-0 stroke-current"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          <span>{errorMessage}</span>
-        </div>
-      </div>
-    {/if}
+    <ErrorAlert {errorMessage} />
   </form>
 
-  {#if answer}
+  {#if stepByStepMessage}
     <div
       class="not-prose collapse-arrow collapse rounded-box mt-6 max-w-sm border border-base-300 bg-base-100"
       tabindex="0">
