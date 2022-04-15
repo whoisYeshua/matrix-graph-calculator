@@ -124,7 +124,7 @@
         on:change={() => (answer = '')}
         type="text"
         required
-        inputmode="numeric"
+        inputmode="decimal"
         placeholder="Past here arguments with comma"
         title="Fill this field. Example: 2, 3"
         class="input input-bordered input-sm w-full" />
