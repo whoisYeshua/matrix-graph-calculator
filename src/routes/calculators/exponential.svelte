@@ -10,11 +10,11 @@
 
   let showContent = 'input'
 
-  const changeMatrixElementValue = (i: number, j: number, event: Event) => {
-    const inputValue = parseInt((event.target as HTMLInputElement).value)
-    matrix[i][j] = inputValue
-    matrix = matrix
-  }
+  // const changeMatrixElementValue = (i: number, j: number, event: Event) => {
+  //   const inputValue = parseInt((event.target as HTMLInputElement).value)
+  //   matrix[i][j] = inputValue
+  //   matrix = matrix
+  // }
 
   const handleReset = () => {
     matrix = matrix.map(row => row.map(el => (el = 0)))
@@ -31,15 +31,20 @@
   selectedColumnSize = {selectedColumnSize}
   matrix: {matrix}
   <div>
-    <div class="tabs">
+    <div class="tabs -mb-px">
       <button
-        class="tab tab-lifted"
-        class:tab-active={showContent === 'input'}
+        class={`tab tab-lifted ${
+          showContent === 'input'
+            ? 'tab-active [--tab-bg:hsl(var(--b2))]'
+            : '[--tab-border-color:transparent]'
+        }`}
         on:click={() => (showContent = 'input')}>Input</button>
       <button
-        class="tab tab-lifted"
-        class:tab-active={showContent === 'past'}
+        class={`tab tab-lifted ${
+          showContent === 'past' ? 'tab-active [--tab-bg:hsl(var(--b2))]' : ''
+        }`}
         on:click={() => (showContent = 'past')}>Past</button>
+      <div class="tab tab-lifted mr-6 flex-1 cursor-default [--tab-border-color:transparent]" />
     </div>
     <!-- sm -->
     {#if showContent === 'input'}
@@ -48,35 +53,7 @@
     {#if showContent === 'past'}
       <MatrixPast bind:matrix />
     {/if}
-    <br />
 
-    <form>
-      <div
-        class="flex w-fit flex-col gap-2 rounded-[0.5rem/1.5rem] border-2 border-x-current border-y-transparent p-2"
-        aria-label="Matrix">
-        {#if matrix}
-          {#each matrix as row, i}
-            <div class="flex gap-2" aria-label={`Row ${i + 1}`}>
-              {#each row as elementValue, j}
-                {@const element = `a${i + 1}_${j + 1}`}
-                <input
-                  type="number"
-                  class="input input-bordered input-sm w-full max-w-[4rem]"
-                  inputmode="numeric"
-                  min="0"
-                  aria-label={element}
-                  title={element}
-                  name={element}
-                  bind:value={elementValue} />
-              {/each}
-            </div>
-          {/each}
-        {/if}
-      </div>
-      <button type="button" class="btn btn-active btn-secondary btn-sm mt-2" on:click={handleReset}>
-        Reset
-      </button>
-    </form>
     <br />
   </div>
 </div>

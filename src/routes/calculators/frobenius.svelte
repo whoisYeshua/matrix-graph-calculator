@@ -62,9 +62,9 @@
     <ErrorAlert {errorMessage} />
   </form>
 
-  {#if stepByStepMessage}
+  {#if answer}
     <div
-      class="not-prose collapse-arrow collapse rounded-box mt-6 max-w-sm border border-base-300 bg-base-100"
+      class="not-prose collapse collapse-arrow rounded-box mt-6 max-w-sm border border-base-300 bg-base-100"
       tabindex="0">
       <div class="collapse-title text-xl font-medium">Step by step</div>
       <div class="collapse-content">
