@@ -1,24 +1,13 @@
 <script lang="ts">
   import SEO from '../_components/SEO.svelte'
-  import MatrixInput from './_components/MatrixInput.svelte'
-  import MatrixPast from './_components/MatrixPast.svelte'
+  import MatrixInput from './_components/exponential/MatrixInput.svelte'
+  import MatrixPast from './_components/exponential/MatrixPast.svelte'
 
-  let selectedRowSize: number
-  let selectedColumnSize: number
+  let selectedMatrixSize: number
 
   let matrix: number[][]
 
   let showContent = 'input'
-
-  // const changeMatrixElementValue = (i: number, j: number, event: Event) => {
-  //   const inputValue = parseInt((event.target as HTMLInputElement).value)
-  //   matrix[i][j] = inputValue
-  //   matrix = matrix
-  // }
-
-  const handleReset = () => {
-    matrix = matrix.map(row => row.map(el => (el = 0)))
-  }
 </script>
 
 <SEO title="Matrix Exponential" desc="Calculate Matrix Exponential" />
@@ -27,8 +16,8 @@
   <h1>Matrix Exponential</h1>
 
   <h2>Calculator</h2>
-  selectedRowSize = {selectedRowSize}
-  selectedColumnSize = {selectedColumnSize}
+  selectedRowSize = {selectedMatrixSize}
+  selectedColumnSize = {selectedMatrixSize}
   matrix: {matrix}
   <div>
     <div class="tabs -mb-px">
@@ -48,7 +37,7 @@
     </div>
     <!-- sm -->
     {#if showContent === 'input'}
-      <MatrixInput bind:selectedColumnSize bind:selectedRowSize bind:matrix />
+      <MatrixInput bind:selectedMatrixSize bind:matrix />
     {/if}
     {#if showContent === 'past'}
       <MatrixPast bind:matrix />
