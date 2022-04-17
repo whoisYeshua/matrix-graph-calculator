@@ -1,24 +1,22 @@
-import { initiateStepByStepMessage } from './messages'
+import { FrobeniusMessage } from './FrobeniusMessage'
 import { createCombinations } from './combination'
 
-export const calculateFrobenius = (argsArr: number[], message: string) => {
+export const calculateFrobenius = (argsArr: number[]) => {
   const [l1, l2] = argsArr
 
-  let result = l1 * l2 - l1 - l2
-  message = initiateStepByStepMessage(l1, l2, result)
+  const result = l1 * l2 - l1 - l2
 
   if (argsArr.length === 2) {
+    const message = new FrobeniusMessage({ l1, l2, result }).getMessage()
     return { result, message }
   } else {
-    const { targetValue, passedMessage } = createCombinations({
+    const messageObject = new FrobeniusMessage({ l1, l2, result, manyArguments: true })
+    const { targetValue, message } = createCombinations({
       argsArr,
       targetValue: result,
-      message
+      messageObject
     })
 
-    message = passedMessage
-    result = targetValue
-
-    return { result, message }
+    return { result: targetValue, message }
   }
 }

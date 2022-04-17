@@ -1,8 +1,4 @@
-import {
-  commonCombinationMessage,
-  combinationStepMessage,
-  finalCombinationMessage
-} from './messages'
+import type { FrobeniusMessage } from './FrobeniusMessage'
 
 export const combinationSum = function (candidates: number[], target: number) {
   const combos: number[][] = []
@@ -31,11 +27,15 @@ export const combinationSum = function (candidates: number[], target: number) {
 type ComnbinationsParams = {
   argsArr: number[]
   targetValue: number
-  message: string
+  messageObject: FrobeniusMessage
 }
 
-export const createCombinations = ({ argsArr, targetValue, message }: ComnbinationsParams) => {
-  message += commonCombinationMessage(argsArr, targetValue)
+export const createCombinations = ({
+  argsArr,
+  targetValue,
+  messageObject
+}: ComnbinationsParams) => {
+  messageObject.initCombination(argsArr, targetValue)
 
   const minArgument = Math.min(...argsArr)
   for (targetValue; targetValue >= minArgument; targetValue--) {
@@ -43,11 +43,11 @@ export const createCombinations = ({ argsArr, targetValue, message }: Comnbinati
     const shortestCombination = combinationArr.sort((a, b) => a.length - b.length)[0]
 
     if (shortestCombination && shortestCombination.length > 0) {
-      message += combinationStepMessage(shortestCombination, targetValue)
+      messageObject.stepCombination(shortestCombination, targetValue)
     } else break
   }
 
-  message += finalCombinationMessage(argsArr, targetValue)
+  messageObject.finalCombination(argsArr, targetValue)
 
-  return { targetValue, passedMessage: message }
+  return { targetValue, message: messageObject.getMessage() }
 }
