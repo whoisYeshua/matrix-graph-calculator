@@ -39,6 +39,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tailwindcss/typography": "^0.5.2",
-		"daisyui": "^2.13.6"
+		"daisyui": "^2.13.6",
+		"mathjs": "^10.4.3"
 	}
 }

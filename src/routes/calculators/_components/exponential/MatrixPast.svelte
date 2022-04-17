@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte'
+
   import ErrorAlert from '../ErrorAlert.svelte'
+  import MatrixHtml from './MatrixHtml.svelte'
 
   import { checkMatrixSize, parseStringToMatix } from './matrixPastHelper'
   import type { Matrix } from './Model'
@@ -8,6 +11,7 @@
 
   let value: string = ''
   let errorMessage: string = ''
+  const dispatch = createEventDispatcher()
 
   matrix = [[]]
 
@@ -23,6 +27,11 @@
         errorMessage = error.message
       }
     }
+  }
+
+  const handleChange = () => {
+    matrix = [[]]
+    dispatch('matrixChange')
   }
 </script>
 
@@ -44,25 +53,13 @@
         cols="20"
         required
         bind:value
-        on:change={() => (matrix = [[]])} />
+        on:change={handleChange} />
     </fieldset>
     <div class="flex justify-end">
       <button class="btn btn-primary btn-sm" type="submit">Apply</button>
     </div>
     <ErrorAlert {errorMessage} />
   </form>
-  <div
-    class="mt-4 flex w-fit flex-col gap-2 rounded-[0.5rem/1.5rem] border-2 border-x-current border-y-transparent p-2"
-    aria-label="Matrix">
-    {#if matrix}
-      {#each matrix as row, i}
-        <div class="flex gap-2" aria-label={`Row ${i + 1}`}>
-          {#each row as elementValue, j}
-            {@const element = `a${i + 1}_${j + 1}`}
-            <span class="w-4 text-center" aria-label={element} title={element}>{elementValue}</span>
-          {/each}
-        </div>
-      {/each}
-    {/if}
-  </div>
+
+  <MatrixHtml {matrix} />
 </div>

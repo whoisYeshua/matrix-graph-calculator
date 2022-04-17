@@ -1,13 +1,27 @@
 <script lang="ts">
   import SEO from '../_components/SEO.svelte'
-  import MatrixInput from './_components/exponential/MatrixInput.svelte'
-  import MatrixPast from './_components/exponential/MatrixPast.svelte'
+  import Matrix from './_components/exponential/Matrix.svelte'
 
-  let selectedMatrixSize: number
+  let matrixes = [
+    {
+      name: 'A',
+      matrix: [[]]
+    }
+  ]
+
+  const handleAddSecondMatrix = () => {
+    matrixes.push({
+      name: 'B',
+      matrix: [[]]
+    })
+    matrixes = matrixes
+  }
+
+  const handleRemoveSecondMatrix = () => {
+    matrixes = matrixes.slice(0, 1)
+  }
 
   let matrix: number[][]
-
-  let showContent = 'input'
 </script>
 
 <SEO title="Matrix Exponential" desc="Calculate Matrix Exponential" />
@@ -16,33 +30,24 @@
   <h1>Matrix Exponential</h1>
 
   <h2>Calculator</h2>
-  selectedRowSize = {selectedMatrixSize}
-  selectedColumnSize = {selectedMatrixSize}
-  matrix: {matrix}
-  <div>
-    <div class="tabs -mb-px">
-      <button
-        class={`tab tab-lifted ${
-          showContent === 'input'
-            ? 'tab-active [--tab-bg:hsl(var(--b2))]'
-            : '[--tab-border-color:transparent]'
-        }`}
-        on:click={() => (showContent = 'input')}>Input</button>
-      <button
-        class={`tab tab-lifted ${
-          showContent === 'past' ? 'tab-active [--tab-bg:hsl(var(--b2))]' : ''
-        }`}
-        on:click={() => (showContent = 'past')}>Past</button>
-      <div class="tab tab-lifted mr-6 flex-1 cursor-default [--tab-border-color:transparent]" />
-    </div>
-    <!-- sm -->
-    {#if showContent === 'input'}
-      <MatrixInput bind:selectedMatrixSize bind:matrix />
-    {/if}
-    {#if showContent === 'past'}
-      <MatrixPast bind:matrix />
-    {/if}
+  matrixA: {matrixes[0].matrix}
+  matrixB: {matrixes[1]?.matrix}
+  {#each matrixes as { name, matrix } (name)}
+    <Matrix matrixName={name} bind:matrix />
+  {/each}
 
-    <br />
+  <div class="divider max-w-sm" />
+
+  <div class="not-prose flex gap-4">
+    {#if !matrixes[1]}
+      <button class="btn btn-primary btn-sm" on:click={handleAddSecondMatrix}>Add matrix B</button>
+    {:else}
+      <button class="btn btn-primary btn-sm">
+        Exp &lbrace;{matrixes[0].name}, {matrixes[1].name}&rbrace;
+      </button>
+      <button class="btn btn-secondary btn-sm" on:click={handleRemoveSecondMatrix}>
+        Remove matrix B
+      </button>
+    {/if}
   </div>
 </div>

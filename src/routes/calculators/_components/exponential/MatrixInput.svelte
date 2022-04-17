@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte'
+
   import {
     createMatrixRow,
     createMatrix,
@@ -9,9 +11,19 @@
   import type { Matrix } from './Model'
 
   export let matrix: Matrix
-  export let selectedMatrixSize: number = 2
 
+  let selectedMatrixSize = 2
   let acceptableMatrixSizes = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+  const dispatch = createEventDispatcher()
+
+  const handleSelectChange = () => {
+    calculateMatrixSizeChange()
+    dispatch('matrixChange')
+  }
+
+  const handleElementChange = () => {
+    dispatch('matrixChange')
+  }
 
   const calculateMatrixSizeChange = () => {
     const currentMatrixSize = matrix.length
@@ -26,6 +38,7 @@
 
   const handleReset = () => {
     matrix = setMatrixElementsToZero(matrix)
+    dispatch('matrixChange')
   }
 
   matrix = createMatrix(selectedMatrixSize, createMatrixRow(selectedMatrixSize))
@@ -41,7 +54,7 @@
       id="matrix-row-select"
       class="select select-bordered select-sm w-full max-w-[4rem]"
       bind:value={selectedMatrixSize}
-      on:change={calculateMatrixSizeChange}>
+      on:change={handleSelectChange}>
       {#each acceptableMatrixSizes as size}
         <option>{size}</option>
       {/each}
@@ -64,7 +77,8 @@
                 aria-label={element}
                 title={element}
                 name={element}
-                bind:value={elementValue} />
+                bind:value={elementValue}
+                on:change={handleElementChange} />
             {/each}
           </div>
         {/each}

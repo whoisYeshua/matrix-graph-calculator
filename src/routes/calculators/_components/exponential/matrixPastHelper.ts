@@ -8,7 +8,7 @@ const checkColumnSize = (matrix: Matrix, rowSize: number) => {
 
     if (currentColumnSize !== rowSize) {
       throw new Error(
-        `The column size should equal to row size (${rowSize}), problem row is ${
+        `The column size should be equal to row size (${rowSize}), problem row is ${
           index + 1
         }: [${row.toString()}]`
       )
