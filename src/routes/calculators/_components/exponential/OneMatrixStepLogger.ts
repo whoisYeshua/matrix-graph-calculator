@@ -1,7 +1,12 @@
-import type { Matrix, MatrixmultiplyStep, OneMatrixStepByStep, StepParameters } from './Model'
+import type {
+  Matrix,
+  MatrixMultiplyStep,
+  ExpOneMatrixStepByStep,
+  OneExpStepParameters
+} from './Model'
 
-export class OneMatrixStepLogger implements OneMatrixStepByStep {
-  #stepsArray: MatrixmultiplyStep[] = []
+export class ExpOneMatrixStepLogger implements ExpOneMatrixStepByStep {
+  #stepsArray: MatrixMultiplyStep[] = []
   #initialMatrix: Matrix
   #previousStepMatrix: Matrix
   #initialDegree = 1
@@ -12,7 +17,7 @@ export class OneMatrixStepLogger implements OneMatrixStepByStep {
     this.#previousStepMatrix = initialMatrix
   }
 
-  addStep({ resultMatrix, resultDegree }: StepParameters) {
+  addStep({ resultMatrix, resultDegree }: OneExpStepParameters) {
     if (resultDegree > 5) this.#deleteUnnecessaryStep()
     this.#stepsArray.push({
       result: {

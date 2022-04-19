@@ -2,8 +2,6 @@
   import type { log } from 'mathjs'
   import type { Matrix } from './Model'
   export let matrix: Matrix
-
-  console.log(matrix)
 </script>
 
 <div

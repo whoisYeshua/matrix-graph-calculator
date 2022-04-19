@@ -4,9 +4,9 @@
   import MatrixHtml from './MatrixHtml.svelte'
 
   import { isNotPositivArray } from './predicates'
-  import { expOfOneMatrix } from './exp'
+  import { expOfOneMatrix } from './expOne'
 
-  import type { Matrix, MatrixmultiplyStep } from './Model'
+  import type { Matrix, MatrixMultiplyStep } from './Model'
 
   export let matrixName: string
   export let matrix: Matrix
@@ -15,7 +15,7 @@
   }
 
   let answer: string = ''
-  let stepByStepArray: MatrixmultiplyStep[]
+  let stepByStepArray: MatrixMultiplyStep[]
 
   $: isNotAcceptableMatrix = isNotPositivArray(matrix.flat())
 
@@ -41,22 +41,24 @@
   <output class="text-center font-semibold"> {answer} </output>
 </div>
 
-<StepByStep>
-  {#if stepByStepArray}
-    {#each stepByStepArray as { result, multiplier, initial }, i (i)}
-      <span>
-        <Var sup={result.degree}>{matrixName}</Var> =
-        <Var sup={multiplier.degree}>{matrixName}</Var> ×
-        <Var sup={initial.degree}>{matrixName}</Var>
-      </span>
+{#if answer}
+  <StepByStep>
+    {#if stepByStepArray}
+      {#each stepByStepArray as { result, multiplier, initial }, i (i)}
+        <span>
+          <Var sup={result.degree}>{matrixName}</Var> =
+          <Var sup={multiplier.degree}>{matrixName}</Var> ×
+          <Var sup={initial.degree}>{matrixName}</Var>
+        </span>
 
-      <div class="mb-4 flex items-center gap-4 overflow-x-auto">
-        <MatrixHtml matrix={result.matrix} />
-        <span>=</span>
-        <MatrixHtml matrix={multiplier.matrix} />
-        <span>×</span>
-        <MatrixHtml matrix={initial.matrix} />
-      </div>
-    {/each}
-  {/if}
-</StepByStep>
+        <div class="mb-4 flex items-center gap-4 overflow-x-auto">
+          <MatrixHtml matrix={result.matrix} />
+          <span>=</span>
+          <MatrixHtml matrix={multiplier.matrix} />
+          <span>×</span>
+          <MatrixHtml matrix={initial.matrix} />
+        </div>
+      {/each}
+    {/if}
+  </StepByStep>
+{/if}

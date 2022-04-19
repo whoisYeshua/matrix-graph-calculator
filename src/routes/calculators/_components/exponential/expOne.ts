@@ -1,6 +1,6 @@
 import { multiply, matrix as mathjsMatrix } from 'mathjs'
 import { isPositivArray, isNotPositivArray } from './predicates'
-import { OneMatrixStepLogger } from './OneMatrixStepLogger'
+import { ExpOneMatrixStepLogger } from './OneMatrixStepLogger'
 
 import type { Matrix as MathjsMatrix } from 'mathjs'
 import type { Matrix } from './Model'
@@ -8,7 +8,7 @@ import type { Matrix } from './Model'
 interface OutputParameters {
   matrix: MathjsMatrix
   degree: number
-  logger: OneMatrixStepLogger
+  logger: ExpOneMatrixStepLogger
 }
 
 const maxDegree = 100
@@ -24,7 +24,7 @@ const generateExpOfOneMatrixOutput = ({ matrix, degree, logger }: OutputParamete
 
 export const expOfOneMatrix = (matrixArr: Matrix) => {
   let currentDegree = 1
-  const logger = new OneMatrixStepLogger(matrixArr)
+  const logger = new ExpOneMatrixStepLogger(matrixArr)
 
   const initialMatrix = mathjsMatrix(matrixArr)
   let prevMatrix = initialMatrix

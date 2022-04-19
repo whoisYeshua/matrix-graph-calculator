@@ -1,6 +1,11 @@
 export type Matrix = number[][]
 
-export interface MatrixmultiplyStep {
+export interface MatrixObject {
+  name: string
+  matrix: Matrix
+}
+
+export interface MatrixMultiplyStep {
   result: {
     matrix: Matrix
     degree: number
@@ -15,12 +20,25 @@ export interface MatrixmultiplyStep {
   }
 }
 
-export interface StepParameters {
+export interface OneExpStepParameters {
   resultMatrix: Matrix
   resultDegree: number
 }
 
-export interface OneMatrixStepByStep {
-  addStep({ resultMatrix, resultDegree }: StepParameters): void
-  getStepsArray(): MatrixmultiplyStep[]
+export interface ExpOneMatrixStepByStep {
+  addStep({ resultMatrix, resultDegree }: OneExpStepParameters): void
+  getStepsArray(): MatrixMultiplyStep[]
+}
+
+export interface MatrixMultiplyPermutationsStep {
+  multipliableNames: string[]
+  multipliableMatrices: Matrix[]
+  resultMatrix: Matrix
+}
+
+export interface ExpTwoMatrixStepByStep {
+  addMatrixName(name: string): void
+  addMatrix(matrix: Matrix): void
+  addResultMatrix(resultMatrix: Matrix): void
+  getStepsArray(): MatrixMultiplyPermutationsStep[]
 }

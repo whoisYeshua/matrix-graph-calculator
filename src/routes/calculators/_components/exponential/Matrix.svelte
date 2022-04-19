@@ -35,10 +35,10 @@
   </div>
 
   {#if showContent === 'input'}
-    <MatrixInput bind:matrix on:matrixChange={handleMatrixChange} />
+    <MatrixInput bind:matrix on:matrixChange={handleMatrixChange} on:matrixChange />
   {/if}
   {#if showContent === 'past'}
-    <MatrixPast bind:matrix on:matrixChange={handleMatrixChange} />
+    <MatrixPast bind:matrix on:matrixChange={handleMatrixChange} on:matrixChange />
   {/if}
   <ExpOneOutput {matrixName} {matrix} bind:this={outputComponent} />
 </div>

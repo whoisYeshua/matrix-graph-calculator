@@ -84,7 +84,7 @@
         {/each}
       {/if}
     </div>
-    <button type="button" class="btn btn-active btn-secondary btn-sm mt-2" on:click={handleReset}>
+    <button type="button" class="btn btn-active btn-warning btn-sm mt-2" on:click={handleReset}>
       Reset
     </button>
   </form>
