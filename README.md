@@ -14,8 +14,6 @@
   - One Matrix
   - Two Matrices
 
----
-
 ## Issues
 
 If you found some problem, [open an issue](https://github.com/whoisYeshua/matrix-graph-calculator/issues/new/choose)
