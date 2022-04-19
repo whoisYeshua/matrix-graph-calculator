@@ -1,6 +1,7 @@
 <script lang="ts">
   export let title = ''
-  export let desc = 'Study graph theory is not so hard'
+  export let desc =
+    'Calculators for basic needs for solving problems related to matrices and graphs'
   $: formattedTitle = title ? `${title} • Matrix/Graph calculator` : 'Matrix/Graph calculator'
 
   const rootUrl = import.meta.env.VITE_ROOT_URL
